@@ -1,4 +1,3 @@
-# Import functions from task_manager.task_utils package
 from task_utils import (
     add_task,
     mark_task_as_complete,
@@ -6,7 +5,7 @@ from task_utils import (
     calculate_progress
 )
 
-# Define the main function
+
 def main():
     while True:
         print("\nTask Management System")
@@ -26,7 +25,7 @@ def main():
 
         elif choice == "2":
             try:
-                index = int(input("Enter task index to mark complete: "))
+                index = int(input("Enter task index: "))
                 mark_task_as_complete(index)
             except ValueError:
                 print("Please enter a valid number.")
@@ -36,14 +35,14 @@ def main():
 
         elif choice == "4":
             progress = calculate_progress()
-            print(f"Progress: {progress:.2f}% completed")
+            print(f"Progress: {progress:.2f}%")
 
         elif choice == "5":
             print("Exiting the program...")
             break
 
         else:
-            print("Invalid choice. Please try again.")
+            print("Invalid choice.")
 
 
 if __name__ == "__main__":
