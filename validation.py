@@ -2,7 +2,7 @@ from datetime import datetime
 
 
 def validate_task_title(title):
-    return isinstance(title, str) and title.strip() != ""
+    return isinstance(title, str) and len(title.strip()) > 0
 
 
 def validate_task_description(description):
