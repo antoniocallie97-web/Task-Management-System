@@ -7,6 +7,7 @@ from validation import (
 tasks = []
 
 
+# Add task
 def add_task(title, description, due_date):
     if not validate_task_title(title):
         print("Invalid title!")
@@ -30,7 +31,8 @@ def add_task(title, description, due_date):
     print("Task added successfully!")
 
 
-def mark_task_as_complete(index, tasks=tasks):
+# Mark task as complete
+def mark_task_as_complete(index):
     if index < 0 or index >= len(tasks):
         return
 
@@ -38,7 +40,8 @@ def mark_task_as_complete(index, tasks=tasks):
     print("Task marked as complete!")
 
 
-def view_pending_tasks(tasks=tasks):
+# View pending tasks
+def view_pending_tasks():
     pending = [t for t in tasks if not t["completed"]]
 
     if len(pending) == 0:
@@ -49,7 +52,8 @@ def view_pending_tasks(tasks=tasks):
         print(f"{i}. {task['title']} - Due: {task['due_date']}")
 
 
-def calculate_progress(tasks=tasks):
+# Progress tracking (often required in labs)
+def calculate_progress():
     if len(tasks) == 0:
         return 0.0
 
