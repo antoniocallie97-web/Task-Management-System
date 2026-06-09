@@ -32,30 +32,25 @@ def add_task(tasks, task_name, description, due_date, priority):
 
 
 def mark_task_complete(tasks, task_index):
+    try:
+        task_index = int(task_index)
+    except ValueError:
+        return False
+
     if 0 <= task_index < len(tasks):
         tasks[task_index]["completed"] = True
         return True
+
     return False
 
 
 def view_pending_tasks(tasks):
-    pending = []
-
-    for task in tasks:
-        if not task["completed"]:
-            pending.append(task)
-
-    return pending
+    return [task for task in tasks if not task["completed"]]
 
 
 def track_progress(tasks):
     if len(tasks) == 0:
         return 0
 
-    completed = 0
-
-    for task in tasks:
-        if task["completed"]:
-            completed += 1
-
-    return (completed / len(tasks)) * 100
+    completed = sum(1 for task in tasks if task["completed"])
+    return int((completed / len(tasks)) * 100)

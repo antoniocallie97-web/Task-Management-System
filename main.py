@@ -5,7 +5,6 @@ from task_utils import (
     track_progress
 )
 
-
 tasks = []
 
 
@@ -20,7 +19,6 @@ def display_menu():
 
 while True:
     display_menu()
-
     choice = input("Enter your choice: ")
 
     if choice == "1":
@@ -45,13 +43,14 @@ while True:
 
         try:
             index = int(input("Enter task index to complete: "))
-
-            if mark_task_complete(tasks, index):
-                print("Task marked as complete!")
-            else:
-                print("Invalid task index.")
         except ValueError:
             print("Please enter a valid number.")
+            continue
+
+        if mark_task_complete(tasks, index):
+            print("Task marked as complete!")
+        else:
+            print("Invalid task index.")
 
     elif choice == "3":
         pending_tasks = view_pending_tasks(tasks)
@@ -69,7 +68,7 @@ while True:
 
     elif choice == "4":
         progress = track_progress(tasks)
-        print(f"Progress: {progress:.2f}%")
+        print(f"Progress: {progress}%")
 
     elif choice == "5":
         print("Goodbye!")
