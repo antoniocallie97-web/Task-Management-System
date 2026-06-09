@@ -1,61 +1,61 @@
 from validation import (
-    validate_task_title,
-    validate_task_description,
-    validate_due_date
+    validate_task_name,
+    validate_description,
+    validate_due_date,
+    validate_priority
 )
 
-tasks = []
 
+def add_task(tasks, task_name, description, due_date, priority):
+    if not validate_task_name(task_name):
+        return False
 
-# Add task
-def add_task(title, description, due_date):
-    if not validate_task_title(title):
-        print("Invalid title!")
-        return
-
-    if not validate_task_description(description):
-        print("Invalid description!")
-        return
+    if not validate_description(description):
+        return False
 
     if not validate_due_date(due_date):
-        print("Invalid due date!")
-        return
+        return False
 
-    tasks.append({
-        "title": title,
+    if not validate_priority(priority):
+        return False
+
+    task = {
+        "task_name": task_name,
         "description": description,
         "due_date": due_date,
+        "priority": int(priority),
         "completed": False
-    })
+    }
 
-    print("Task added successfully!")
-
-
-# Mark task as complete
-def mark_task_as_complete(index):
-    if index < 0 or index >= len(tasks):
-        return
-
-    tasks[index]["completed"] = True
-    print("Task marked as complete!")
+    tasks.append(task)
+    return True
 
 
-# View pending tasks
-def view_pending_tasks():
-    pending = [t for t in tasks if not t["completed"]]
-
-    if len(pending) == 0:
-        print("No pending tasks.")
-        return
-
-    for i, task in enumerate(pending):
-        print(f"{i}. {task['title']} - Due: {task['due_date']}")
+def mark_task_complete(tasks, task_index):
+    if 0 <= task_index < len(tasks):
+        tasks[task_index]["completed"] = True
+        return True
+    return False
 
 
-# Progress tracking (often required in labs)
-def calculate_progress():
+def view_pending_tasks(tasks):
+    pending = []
+
+    for task in tasks:
+        if not task["completed"]:
+            pending.append(task)
+
+    return pending
+
+
+def track_progress(tasks):
     if len(tasks) == 0:
-        return 0.0
+        return 0
 
-    completed = sum(1 for t in tasks if t["completed"])
+    completed = 0
+
+    for task in tasks:
+        if task["completed"]:
+            completed += 1
+
     return (completed / len(tasks)) * 100
