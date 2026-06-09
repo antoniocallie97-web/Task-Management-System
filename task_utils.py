@@ -1,56 +1,47 @@
-from validation import (
-    validate_task_name,
-    validate_description,
-    validate_due_date,
-    validate_priority
-)
+from datetime import datetime
 
+# Define tasks list
+tasks = []
 
-def add_task(tasks, task_name, description, due_date, priority):
-    if not validate_task_name(task_name):
-        return False
-
-    if not validate_description(description):
-        return False
-
-    if not validate_due_date(due_date):
-        return False
-
-    if not validate_priority(priority):
-        return False
-
+# Implement add_task function
+def add_task(title, description, due_date):
     task = {
-        "task_name": task_name,
+        "title": title,
         "description": description,
         "due_date": due_date,
-        "priority": int(priority),
         "completed": False
     }
-
     tasks.append(task)
-    return True
+    print("Task added successfully!")
 
+# Implement mark_task_as_complete function
+def mark_task_as_complete(index, tasks=tasks):
+    # assuming user input is 1-based index
+    real_index = index - 1
 
-def mark_task_complete(tasks, task_index):
-    try:
-        task_index = int(task_index)
-    except ValueError:
-        return False
+    if 0 <= real_index < len(tasks):
+        tasks[real_index]["completed"] = True
+        print("Task marked as complete!")
+    else:
+        print("Invalid task index!")
 
-    if 0 <= task_index < len(tasks):
-        tasks[task_index]["completed"] = True
-        return True
+# Implement view_pending_tasks function
+def view_pending_tasks(tasks=tasks):
+    has_pending = False
 
-    return False
+    for i, task in enumerate(tasks):
+        if not task["completed"]:
+            has_pending = True
+            print(f"{i+1}. {task['title']} - {task['description']} (Due: {task['due_date']})")
 
+    if not has_pending:
+        print("No pending tasks")
 
-def view_pending_tasks(tasks):
-    return [task for task in tasks if not task["completed"]]
-
-
-def track_progress(tasks):
+# Implement calculate_progress function
+def calculate_progress(tasks=tasks):
     if len(tasks) == 0:
         return 0
 
     completed = sum(1 for task in tasks if task["completed"])
-    return int((completed / len(tasks)) * 100)
+    progress = (completed / len(tasks)) * 100
+    return progress
