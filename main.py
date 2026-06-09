@@ -1,3 +1,4 @@
+# Import functions from task_utils module
 from task_utils import (
     add_task,
     mark_task_as_complete,
@@ -24,10 +25,10 @@ def main():
 
         elif choice == "2":
             try:
-                index = int(input("Enter task number: "))
+                index = int(input("Enter task number to mark complete: "))
                 mark_task_as_complete(index)
             except ValueError:
-                print("Invalid input!")
+                print("Please enter a valid number.")
 
         elif choice == "3":
             view_pending_tasks()
