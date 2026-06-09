@@ -7,72 +7,34 @@ from task_utils import (
 
 tasks = []
 
-
-def display_menu():
-    print("\nTask Management System")
-    print("1. Add Task")
-    print("2. Mark Task Complete")
-    print("3. View Pending Tasks")
-    print("4. Track Progress")
-    print("5. Exit")
-
-
 while True:
-    display_menu()
-    choice = input("Enter your choice: ")
+    try:
+        choice = input()
 
-    if choice == "1":
-        task_name = input("Task Name: ")
-        description = input("Description: ")
-        due_date = input("Due Date (YYYY-MM-DD): ")
-        priority = input("Priority (1-5): ")
+        if choice == "1":
+            task_name = input()
+            description = input()
+            due_date = input()
+            priority = input()
 
-        if add_task(tasks, task_name, description, due_date, priority):
-            print("Task added successfully!")
-        else:
-            print("Invalid task details.")
+            if add_task(tasks, task_name, description, due_date, priority):
+                print("Task added successfully!")
 
-    elif choice == "2":
-        if not tasks:
-            print("No tasks available.")
-            continue
+        elif choice == "2":
+            index = input()
+            if mark_task_complete(tasks, index):
+                print("Task marked as complete!")
 
-        for i, task in enumerate(tasks):
-            status = "Completed" if task["completed"] else "Pending"
-            print(f"{i}: {task['task_name']} ({status})")
+        elif choice == "3":
+            pending = view_pending_tasks(tasks)
+            for t in pending:
+                print(f"{t['task_name']} {t['due_date']} {t['priority']}")
 
-        try:
-            index = int(input("Enter task index to complete: "))
-        except ValueError:
-            print("Please enter a valid number.")
-            continue
+        elif choice == "4":
+            print(f"{track_progress(tasks)}")
 
-        if mark_task_complete(tasks, index):
-            print("Task marked as complete!")
-        else:
-            print("Invalid task index.")
+        elif choice == "5":
+            break
 
-    elif choice == "3":
-        pending_tasks = view_pending_tasks(tasks)
-
-        if not pending_tasks:
-            print("No pending tasks.")
-        else:
-            print("\nPending Tasks:")
-            for task in pending_tasks:
-                print(
-                    f"- {task['task_name']} | "
-                    f"Due: {task['due_date']} | "
-                    f"Priority: {task['priority']}"
-                )
-
-    elif choice == "4":
-        progress = track_progress(tasks)
-        print(f"Progress: {progress}%")
-
-    elif choice == "5":
-        print("Goodbye!")
+    except EOFError:
         break
-
-    else:
-        print("Invalid choice. Try again.")
